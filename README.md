@@ -2,6 +2,12 @@
 
 A full-stack AI-powered travel planning application built with Next.js 15, Google Gemini/OpenAI, Supabase, and TypeScript. Generate personalized itineraries with detailed day-by-day plans, track your travel history, and visualize your spending with beautiful analytics dashboards.
 
+## 🌐 Live Demo
+
+**🔗 [https://ai-travel-planner-chi-seven.vercel.app](https://ai-travel-planner-chi-seven.vercel.app)**
+
+Try it out! Sign up and generate your first AI-powered travel itinerary.
+
 ## 🚀 Tech Stack
 
 ### Frontend
