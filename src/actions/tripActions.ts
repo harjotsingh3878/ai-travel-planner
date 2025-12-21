@@ -210,7 +210,7 @@ export async function getDashboardStats() {
 
     // Group by destination
     const tripsByDestination = trips.reduce((acc, trip) => {
-      const existing = acc.find((item) => item.destination === trip.destination);
+      const existing = acc.find((item: { destination: string; count: number }) => item.destination === trip.destination);
       if (existing) {
         existing.count++;
       } else {
@@ -221,7 +221,7 @@ export async function getDashboardStats() {
 
     // Group by travel style
     const tripsByStyle = trips.reduce((acc, trip) => {
-      const existing = acc.find((item) => item.style === trip.travel_style);
+      const existing = acc.find((item: { style: string; count: number }) => item.style === trip.travel_style);
       if (existing) {
         existing.count++;
       } else {
@@ -234,7 +234,7 @@ export async function getDashboardStats() {
     const tripsByMonth = trips.reduce((acc, trip) => {
       const date = new Date(trip.created_at);
       const month = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-      const existing = acc.find((item) => item.month === month);
+      const existing = acc.find((item: { month: string; count: number; budget: number }) => item.month === month);
       if (existing) {
         existing.count++;
         existing.budget += Number(trip.budget);

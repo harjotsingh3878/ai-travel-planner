@@ -5,9 +5,10 @@ import TripDetailClient from './TripDetailClient';
 export default async function TripDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { trip } = await getTripById(params.id);
+  const { id } = await params;
+  const { trip } = await getTripById(id);
 
   if (!trip) {
     notFound();
