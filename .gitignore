@@ -39,5 +39,8 @@ next-env.d.ts
 # Test files
 check-models.js
 
+# Interview preparation (personal notes)
+PROJECT_INTERVIEW_GUIDE.md
+
 # Vercel
 .vercel
