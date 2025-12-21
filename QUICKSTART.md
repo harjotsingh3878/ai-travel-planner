@@ -98,6 +98,64 @@ npm run dev
 ## Next Steps
 
 - Explore the Dashboard analytics
+
+## 🚀 Deploy to Vercel (5 minutes)
+
+### Quick Deploy
+
+1. **Install Vercel CLI:**
+```bash
+npm install -g vercel
+```
+
+2. **Login:**
+```bash
+vercel login
+```
+
+3. **Deploy:**
+```bash
+vercel --prod
+```
+
+4. **Add environment variables:**
+```bash
+# Copy each variable from .env.local
+vercel env add NEXTAUTH_SECRET production
+vercel env add NEXT_PUBLIC_SUPABASE_URL production
+vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production
+vercel env add SUPABASE_SERVICE_ROLE_KEY production
+vercel env add AI_PROVIDER production
+vercel env add GEMINI_API_KEY production
+```
+
+5. **Set production URL:**
+```bash
+vercel env add NEXTAUTH_URL production
+# Enter: https://your-app-name.vercel.app
+```
+
+6. **Redeploy:**
+```bash
+vercel --prod
+```
+
+### Your App is Live! 🎉
+
+Visit: `https://your-app-name.vercel.app`
+
+### Automatic Deployments
+
+Push to GitHub for auto-deploy:
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/yourusername/ai-travel-planner.git
+git push -u origin main
+```
+
+Then connect repository in Vercel dashboard for automatic deployments on every push.
 - Create multiple trips to see charts populate
 - Try regenerating itineraries
 - Check out the comprehensive [README.md](./README.md) for full documentation

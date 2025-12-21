@@ -404,7 +404,102 @@ console.log(session);
 
 Redux state is local only (not persisted). Refresh page to reset.
 
-## 🐛 Troubleshooting
+## � Deployment to Vercel
+
+### Prerequisites
+- Git repository (GitHub, GitLab, or Bitbucket)
+- Vercel account (free at [vercel.com](https://vercel.com))
+
+### Option 1: Deploy via CLI (Recommended)
+
+1. **Install Vercel CLI:**
+```bash
+npm install -g vercel
+```
+
+2. **Login to Vercel:**
+```bash
+vercel login
+```
+
+3. **Deploy to production:**
+```bash
+vercel --prod
+```
+
+4. **Add environment variables:**
+```bash
+vercel env add NEXTAUTH_SECRET production
+vercel env add NEXTAUTH_URL production
+vercel env add NEXT_PUBLIC_SUPABASE_URL production
+vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production
+vercel env add SUPABASE_SERVICE_ROLE_KEY production
+vercel env add AI_PROVIDER production
+vercel env add GEMINI_API_KEY production
+```
+
+Or add them all via the Vercel dashboard.
+
+### Option 2: Deploy via Vercel Dashboard
+
+1. **Push code to GitHub:**
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/yourusername/ai-travel-planner.git
+git push -u origin main
+```
+
+2. **Import to Vercel:**
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Click "Import Project"
+   - Select your GitHub repository
+   - Click "Import"
+
+3. **Configure environment variables:**
+   - In Vercel dashboard → Settings → Environment Variables
+   - Add all variables from `.env.local`:
+     - `NEXTAUTH_URL` → `https://your-app.vercel.app`
+     - `NEXTAUTH_SECRET` → (your secret from openssl)
+     - `NEXT_PUBLIC_SUPABASE_URL` → (your Supabase URL)
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY` → (your anon key)
+     - `SUPABASE_SERVICE_ROLE_KEY` → (your service key)
+     - `AI_PROVIDER` → `gemini` or `openai`
+     - `GEMINI_API_KEY` → (your Gemini key)
+
+4. **Deploy:**
+   - Click "Deploy"
+   - Wait 1-2 minutes for build
+   - Your app is live! 🎉
+
+### Post-Deployment
+
+**Update NEXTAUTH_URL:**
+```bash
+vercel env add NEXTAUTH_URL production
+# Enter: https://your-app.vercel.app
+```
+
+**Redeploy to apply changes:**
+```bash
+vercel --prod
+```
+
+### Automatic Deployments
+
+Connect your Git repository for automatic deployments:
+- Every push to `main` → Production deployment
+- Every PR → Preview deployment
+
+### Custom Domain (Optional)
+
+1. Go to Vercel dashboard → Settings → Domains
+2. Add your custom domain
+3. Update DNS records as instructed
+4. Update `NEXTAUTH_URL` to your custom domain
+
+## �🐛 Troubleshooting
 
 ### OpenAI API Errors
 
