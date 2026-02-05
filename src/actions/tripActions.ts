@@ -3,20 +3,29 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { supabaseAdmin } from '@/lib/supabase';
-import { generateItinerary } from '@/lib/ai';
+import { generateItineraryWithOrchestrator } from '@/lib/ai/orchestrator';
 import { TripInput, Trip } from '@/types';
 import { revalidatePath } from 'next/cache';
 
 export async function createTrip(tripInput: TripInput) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       throw new Error('Unauthorized');
     }
 
-    // Generate itinerary using OpenAI
-    const { itinerary, total_estimated_cost } = await generateItinerary(tripInput);
+    const result = await generateItineraryWithOrchestrator({
+      userId: session.user.id,
+      tripInput,
+      enableRAG: true,
+    });
+
+    if (!result.success) {
+      return { success: false, error: result.error };
+    }
+
+    const { itinerary, total_estimated_cost } = result;
 
     // Save to database
     const { data: trip, error } = await supabaseAdmin
@@ -149,7 +158,6 @@ export async function regenerateTrip(tripId: string) {
       throw new Error('Trip not found');
     }
 
-    // Generate new itinerary
     const tripInput: TripInput = {
       destination: existingTrip.destination,
       travel_days: existingTrip.travel_days,
@@ -158,7 +166,17 @@ export async function regenerateTrip(tripId: string) {
       interests: existingTrip.interests,
     };
 
-    const { itinerary, total_estimated_cost } = await generateItinerary(tripInput);
+    const genResult = await generateItineraryWithOrchestrator({
+      userId: session.user.id,
+      tripInput,
+      enableRAG: true,
+    });
+
+    if (!genResult.success) {
+      return { success: false, error: genResult.error };
+    }
+
+    const { itinerary, total_estimated_cost } = genResult;
 
     // Update trip
     const { data: updatedTrip, error: updateError } = await supabaseAdmin
